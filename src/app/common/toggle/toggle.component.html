@@ -1,1 +1,7 @@
-<button (click)="toggleItem()">{{toggle}}</button>
+<form [formGroup]="toggleForm">
+    <label class="switch">
+        <input formControlName="toggle" type="checkbox" >
+        <span class="slider round"></span>
+    </label>  
+</form>
+ 

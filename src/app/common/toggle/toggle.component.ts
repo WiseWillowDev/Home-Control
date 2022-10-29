@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 import { ToggleService } from './toggle.service';
 
 @Component({
@@ -7,19 +8,25 @@ import { ToggleService } from './toggle.service';
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss']
 })
-export class ToggleComponent implements OnInit {
+export class ToggleComponent implements OnInit, OnDestroy {
 
-  toggle: boolean = false;
+  toggleForm: FormGroup = new FormGroup({});
+
+  destroy: Subject<void> = new Subject();
 
   constructor(private toggleService: ToggleService) { }
 
   ngOnInit(): void {
-    this.toggleService.getToggle().subscribe(res => {
-      this.toggle = res;
+    this.toggleService.getToggle().pipe(takeUntil(this.destroy)).subscribe((res: boolean) => {
+      this.toggleForm.addControl('toggle', new FormControl(res, []))
+    })
+
+    this.toggleForm.controls['toggle'].valueChanges.pipe(takeUntil(this.destroy)).subscribe(value => {
+      this.toggleService.setToggle(value)
     })
   }
 
-  toggleItem(): void {
-    this.toggleService.setToggle(!this.toggle)
+  ngOnDestroy(): void {
+      this.destroy.next();
   }
 }
