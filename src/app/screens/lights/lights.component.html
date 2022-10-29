@@ -1,0 +1,7 @@
+<app-header [title]="'Lights'"></app-header>
+
+<div>
+    <div *ngFor="let light of lights">
+        <app-light-view [light]="light"></app-light-view>
+    </div>
+</div>

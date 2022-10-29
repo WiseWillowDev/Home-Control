@@ -1,0 +1,17 @@
+<app-header [title]="'Cars'"></app-header>
+
+<div class="content-wrapper">
+    
+    <div class="button-wrapper">
+        <button (click)="editToggle()">Edit</button>
+        <button (click)="navigate()">+</button>
+    </div>
+
+    <div class="cars-wrapper">
+        <div class="car-wrapper" *ngFor="let car of cars">
+            <app-car-view [editable]="editable" [car]="car"></app-car-view>
+
+        </div>
+    </div>
+
+</div>

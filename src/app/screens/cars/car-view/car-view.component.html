@@ -1,0 +1,14 @@
+<div class="info">
+    <div class="sub-info">{{car.nickname}}'s car</div> 
+
+    <div>
+        <button *ngIf="isExpired() && !editable" (click)="refresh()">Re-Register?</button>
+        <div *ngIf="!isExpired() && !editable">{{getTime()}}</div>
+    
+        <button *ngIf="editable" (click)="edit()">Edit</button>
+    
+        <button *ngIf="editable" (click)="delete()">delete</button>
+    
+    </div>
+
+</div>
