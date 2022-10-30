@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HexViewStateService } from '../hex-view-state.service';
 import { Score } from '../hex.model';
 
 @Component({
@@ -10,7 +12,7 @@ export class HexViewComponent implements OnInit {
 
   @Input() hexScore: Score = {} as any;
   
-  constructor() { }
+  constructor(private hexStateService: HexViewStateService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -18,5 +20,12 @@ export class HexViewComponent implements OnInit {
   getScore(): string {
     return this.hexScore.score.toFixed(2);
   }
+
+  viewDetails(): void {
+    this.hexStateService.updateModel(this.hexScore);
+    this.router.navigate(['hex/details']);
+  }
+
+
 
 }

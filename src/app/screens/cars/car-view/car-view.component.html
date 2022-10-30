@@ -2,7 +2,9 @@
     <div class="info">
         <div>
             <div class="identifyer">
-                <img class="svg-size"  [ngStyle]="{'fill': getColor()}" [src]="getSrc()">
+                <div class="logo-wrapper" [ngStyle]="{'background-color': getColor()}">
+                    <img class="svg-size"  [src]="getSrc()">
+                </div>
                 <div class="sub-info">{{car.nickname}}'s car</div> 
             </div>
         </div>

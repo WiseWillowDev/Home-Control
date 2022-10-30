@@ -14,8 +14,8 @@
 }
 
 .svg-size {
-    width: 3.6rem;
-    height: 3.6rem;
+    width: 4rem;
+    height: 4rem;
 }
 
 .side-buttons { 
@@ -50,6 +50,11 @@
     }
 }
 
+.logo-wrapper {
+    border-radius: 10rem;
+    height: 100%;
+    margin-right: 1rem;
+}
 
 .identifyer {
     display: flex;

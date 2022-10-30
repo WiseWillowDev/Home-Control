@@ -23,7 +23,16 @@
     </form>
 
 
-    <div (click)="save()" class="submit-button">
-        <div>Save</div>
+    <div (click)="save()"  class="submit-button">
+        <div *ngIf="!loading">Save</div>
+        <div *ngIf="loading" class="loading">
+            <div  >Saving</div>
+            <div class="loading-1">.</div>
+            <div class="loading-2">.</div>
+            <div class="loading-3">.</div>
+            <div class="loading-4">.</div>
+
+        </div>
+
     </div>
 </div>

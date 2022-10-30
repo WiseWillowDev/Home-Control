@@ -21,4 +21,10 @@ export class HexService {
     const URL = `${this.baseUrl}/scores/top?limit=${limit}`
     return this.http.get<Score[]>(URL);
   }
+
+
+  getScoresByModel(modelId: string): Observable<Score[]> {
+    const URL = `${this.baseUrl}/scores/${modelId}`
+    return this.http.get<Score[]>(URL);
+  }
 }

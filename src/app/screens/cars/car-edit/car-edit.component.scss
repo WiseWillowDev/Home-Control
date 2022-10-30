@@ -38,3 +38,45 @@
     border-radius: 1rem;
     margin-left: 1rem;
 }
+
+@keyframes visbile {
+    from {opacity: 0;}
+    to {opacity: 100;}
+  }
+
+.loading {
+    display: flex;
+    flex-direction: row;
+}
+
+.loading-1 {
+    animation-iteration-count: infinite;
+    animation-name: visbile;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out
+}
+  
+.loading-2 {
+    animation-iteration-count: infinite;
+    animation-name: visbile;
+    animation-duration: 2s;
+    animation-delay: .5s;
+    animation-timing-function: ease-in-out;
+
+}
+
+.loading-3 {
+    animation-iteration-count: infinite;
+    animation-name: visbile;
+    animation-duration: 2s;
+    animation-delay: 1s;
+    animation-timing-function: ease-in-out;
+}
+
+.loading-4 {
+    animation-iteration-count: infinite;
+    animation-name: visbile;
+    animation-duration: 2s;
+    animation-delay: 1.5s;
+    animation-timing-function: ease-in-out;
+}

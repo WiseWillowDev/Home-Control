@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { HexViewStateService } from '../hex-view-state.service';
+import { Score } from '../hex.model';
+import { HexService } from '../hex.service';
 
 @Component({
   selector: 'app-hex-view-details',
@@ -7,9 +11,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HexViewDetailsComponent implements OnInit {
 
-  constructor() { }
+  modelId: string = ''
+
+  scores: Score[] = [];
+
+  constructor(private hexStateService: HexViewStateService, private router: Router, private hexService: HexService) { }
 
   ngOnInit(): void {
+    this.hexStateService.getModel().subscribe((score) => {
+      this.modelId = score.model_id;
+      this.hexService.getScoresByModel(this.modelId).subscribe(scores => {
+        this.scores = scores;
+      })
+    })
+  }
+
+  getDate(mili: number): string {
+    console.log(this.scores[0].start_mili)
+    console.log(mili)
+
+    const date = new Date(Math.floor(mili) * 1000);
+    console.log(date);
+    return date.toISOString().substring(0, 10);
+  }
+
+  formatScore(score: number): string {
+    return score.toFixed(1);
   }
 
 }

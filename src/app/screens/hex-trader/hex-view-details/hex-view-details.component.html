@@ -1,1 +1,16 @@
-<p>hex-view-details works!</p>
+<app-header [title]="'Hex Details'"></app-header>
+<app-tile >{{modelId}}</app-tile>
+
+
+<div *ngFor="let score of scores">
+    <app-tile >
+        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+            <div >
+                {{formatScore(score.score)}}
+            </div> 
+            <div>
+                {{getDate(score.start_mili)}} | {{getDate(score.end_mili)}}
+            </div>
+        </div>
+    </app-tile>
+</div>

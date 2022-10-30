@@ -14,6 +14,8 @@ import { CarsService } from '../cars.service';
 })
 export class CarEditComponent implements OnInit, OnDestroy {
 
+  loading = false;
+
   car: Car | null = null;
   carForm: FormGroup = new FormGroup({});
 
@@ -90,15 +92,21 @@ export class CarEditComponent implements OnInit, OnDestroy {
       lastRegisteredDate: new Date()
     }
 
-    if (!!this.car) {
-      this.carService.updateCar(toBeSavedCar).subscribe(res => {
-        this.route.navigate(['/cars'])
-      })
-    } else {
-      this.carService.registerNewCar(toBeSavedCar).subscribe(() => {
-        this.route.navigate(['/cars'])
-      })
+    if (!this.loading) {  
+      this.loading = true;
+      if (!!this.car) {
+        this.carService.updateCar(toBeSavedCar).subscribe(res => {
+          this.loading = false;
+          this.route.navigate(['/cars'])
+        })
+      } else {
+        this.carService.registerNewCar(toBeSavedCar).subscribe(() => {
+          this.loading = false;
+          this.route.navigate(['/cars'])
+        })
+      }
     }
+
 
   }
 
