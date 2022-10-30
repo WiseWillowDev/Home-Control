@@ -23,6 +23,8 @@ export class CarViewComponent implements OnInit, AfterViewInit {
 
   context: any;
 
+  loading: boolean = false;
+
   colors: Colors = this.colorService.getDarkMode();
 
   constructor(private router: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
@@ -66,14 +68,18 @@ export class CarViewComponent implements OnInit, AfterViewInit {
 
   delete(): void {
     this.carService.deleteCar(this.car.plate).subscribe(() => {
-      console.log('deleted');
+      this.update.emit()
     })
   }
 
   refresh(): void { 
-    this.carService.reregisterCar(this.car.plate).subscribe(res => {
-      console.log('refreshed');
-    })
+    if(!this.loading) {
+      this.loading = true;
+      this.carService.reregisterCar(this.car.plate).subscribe(() => {
+        this.update.emit()
+        this.loading = false;
+      })
+    }
   }
 
   isExpired(): boolean {
@@ -106,6 +112,13 @@ export class CarViewComponent implements OnInit, AfterViewInit {
       return `${Math.floor(showed)}h`;
     }
     return "";
+  }
+
+  getSrc(): string {
+    const make = this.car.make.trim().toLowerCase();
+    const assert = make.charAt(0).toUpperCase();
+    const complete = `${assert}${make.substring(1)}`
+    return `assets/svgs/${complete}.svg`
   }
 
 

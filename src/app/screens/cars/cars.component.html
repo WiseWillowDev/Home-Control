@@ -9,7 +9,7 @@
 
     <div class="cars-wrapper">
         <div class="car-wrapper" *ngFor="let car of cars">
-            <app-car-view [editable]="editable" [car]="car"></app-car-view>
+            <app-car-view [editable]="editable" [car]="car" (update)="refreshCars()"></app-car-view>
 
         </div>
     </div>
