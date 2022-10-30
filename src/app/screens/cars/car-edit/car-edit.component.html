@@ -2,13 +2,21 @@
 
 
 <div class="wrapper">
+    <div class="trash-wrapper-outer">
+        <div class="trash-wrapper-inner" (click)="cancel()" [ngStyle]="{'background-color': showColor(selectedcolor)}">
+            <svg width="2rem" height="2rem" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path  fill="black"  d="M180.48 370.965C172.875 370.965 166.367 368.335 160.957 363.075C155.537 357.805 152.827 351.474 152.827 344.08V169.328H139V142.443H208.133V129H291.093V142.443H360.226V169.328H346.399V344.08C346.399 351.474 343.694 357.805 338.283 363.075C332.863 368.335 326.35 370.965 318.746 370.965H180.48ZM318.746 169.328H180.48V344.08H318.746V169.328ZM208.133 317.195H235.786V196.213H208.133V317.195ZM263.439 317.195H291.093V196.213H263.439V317.195Z" fill-opacity="0.9"/>
+            </svg>
+        </div>
 
+    </div>
     <form [formGroup]="carForm" style="display: flex; flex-direction: column">
-        <input formControlName="name"/>
-        <input formControlName="make"/>
-        <input formControlName="model"/>
-        <input formControlName="year"/>
-        <input formControlName="plate"/>
+        <app-input [control]="nameControl" [placeholder]="'Car name'"></app-input>
+        <app-input [control]="makeControl" [placeholder]="'Make'"></app-input>
+        <app-input [control]="modelControl" [placeholder]="'Model'"></app-input>
+        <app-input [control]="yearControl" [placeholder]="'Year'"></app-input>
+        <app-input [control]="plateControl" [placeholder]="'Plate Number'"></app-input>
+        <div [ngStyle]="{'color': showColor('platformHighlight')}" style="margin-left: 1rem; margin-top: 1rem; font-size: x-large; font-weight: bold;">Color</div>
         <div class="colors" >
             <div *ngFor="let color of colors" class="item"  [ngStyle]="{'background-color': showColor(color)}" (click)="selectColor(color)"></div>
         </div>

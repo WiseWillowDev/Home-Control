@@ -20,7 +20,7 @@ export class ColorService {
             grey: '#7D7C7C',
             green: '#6DDD9A',
             yellow: '#EEDFA1',
-            pink: '#EEDFA1',
+            pink: '#F390CC',
             black: '#000000',
             white: '#F1F1F1'
             

@@ -17,18 +17,25 @@ export class CarEditComponent implements OnInit, OnDestroy {
   car: Car | null = null;
   carForm: FormGroup = new FormGroup({});
 
+  nameControl: FormControl = new FormControl('', [Validators.required]);
+  makeControl: FormControl = new FormControl('', [Validators.required]);
+  modelControl: FormControl = new FormControl('', [Validators.required]);
+  yearControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]);
+  plateControl: FormControl = new FormControl('', [Validators.required]);
+
   destroySub: Subject<void> = new Subject();
 
   selectedcolor: string = 'white';
 
   colors: string[] = [
-    "black", 
-    "white", 
     "red", 
     "blue", 
+    "white", 
     "green", 
+    "black", 
     "grey", 
-    "pink"
+    "pink",
+    "yellow"
   ]
 
 
@@ -37,11 +44,11 @@ export class CarEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.carForm.addControl('year', new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]))
-    this.carForm.addControl('make', new FormControl('', [Validators.required]))
-    this.carForm.addControl('model', new FormControl('', [Validators.required]))
-    this.carForm.addControl('plate', new FormControl('', [Validators.required]))
-    this.carForm.addControl('name', new FormControl('', [Validators.required]))
+    this.carForm.addControl('name', this.nameControl)
+    this.carForm.addControl('make', this.makeControl)
+    this.carForm.addControl('model', this.modelControl)
+    this.carForm.addControl('year', this.yearControl)
+    this.carForm.addControl('plate', this.plateControl)
 
 
     this.carEditState.getCar().pipe(takeUntil(this.destroySub)).subscribe((car: Car | null) => {
@@ -99,6 +106,10 @@ export class CarEditComponent implements OnInit, OnDestroy {
     let value: string = this.carForm.controls[controlName].value;
 
     return value.trim();
+  }
+
+  cancel() {
+    this.route.navigate(['/cars']);
   }
 
 }

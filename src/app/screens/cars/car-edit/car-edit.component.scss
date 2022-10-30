@@ -1,6 +1,7 @@
 .colors {
     display: flex;
     justify-content: space-between;
+    margin: 1rem;
 }
 
 .item {
@@ -26,6 +27,14 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    height: 70vh;
     justify-content: space-between;
+}
+
+.trash-wrapper-outer {
+    display: flex;
+}
+
+.trash-wrapper-inner {
+    border-radius: 1rem;
+    margin-left: 1rem;
 }
