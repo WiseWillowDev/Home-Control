@@ -3,8 +3,8 @@
 <div class="content-wrapper">
     
     <div class="button-wrapper">
-        <button (click)="editToggle()">Edit</button>
-        <button (click)="navigate()">+</button>
+        <app-button [color]="colors.platformHighlight"  [backgroundcolor]="colors.platform" style="margin-right: .1rem;" (click)="editToggle()">Edit</app-button>
+        <app-button [color]="colors.platformHighlight" [backgroundcolor]="colors.platform" (click)="navigate()">+</app-button>
     </div>
 
     <div class="cars-wrapper">

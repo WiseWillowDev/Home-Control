@@ -13,3 +13,23 @@
     font-size: larger;
 }
 
+.svg-size {
+    width: 3.6rem;
+    height: 3.6rem;
+}
+
+.side-buttons { 
+    display: flex;
+}
+
+#myCanvas {
+    height: 4rem;
+    width: 8rem;
+    transform: rotate(-90deg) scaleY(-1);
+    margin-right: -2rem;
+}
+
+.hour-display {
+    display: flex;
+    align-items: center;
+}

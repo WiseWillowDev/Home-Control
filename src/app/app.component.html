@@ -1,2 +1,6 @@
-<router-outlet></router-outlet>
+<div class="real-body" [ngStyle]="{'background-color': colors.background}">
+    <div class="nested-body">
+        <router-outlet></router-outlet>
+    </div>
+</div>
 <app-nav-bar></app-nav-bar>

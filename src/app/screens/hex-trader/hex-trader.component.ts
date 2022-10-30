@@ -18,7 +18,7 @@ export class HexTraderComponent implements OnInit {
   }
 
   getScores(): void {
-    this.hexService.getScores(30).subscribe(scores => {
+    this.hexService.getScores(20).subscribe(scores => {
       this.hexScores = scores;
     })
 

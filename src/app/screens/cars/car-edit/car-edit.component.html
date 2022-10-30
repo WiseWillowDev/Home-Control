@@ -1,7 +1,7 @@
-<app-header [title]="'Register New Car'"></app-header>
+<app-header [title]="'Car Details'"></app-header>
 
 
-<div >
+<div class="wrapper">
 
     <form [formGroup]="carForm" style="display: flex; flex-direction: column">
         <input formControlName="name"/>
@@ -9,13 +9,13 @@
         <input formControlName="model"/>
         <input formControlName="year"/>
         <input formControlName="plate"/>
+        <div class="colors" >
+            <div *ngFor="let color of colors" class="item"  [ngStyle]="{'background-color': showColor(color)}" (click)="selectColor(color)"></div>
+        </div>
     </form>
 
-    <div class="colors" >
-        <div *ngFor="let color of colors" class="item" style="background-color: {{color}};" (click)="selectColor(color)"></div>
+
+    <div (click)="save()" class="submit-button">
+        <div>Save</div>
     </div>
-
-    <div class="item" style="background-color: {{selectedcolor}};"></div>
-
-    <button (click)="save()">Submit</button>
 </div>

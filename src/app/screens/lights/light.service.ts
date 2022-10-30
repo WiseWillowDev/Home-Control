@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { io } from 'socket.io-client';
@@ -28,7 +27,6 @@ export class LightService {
     }
 
     toggleLight(lightName: string): void {
-        console.log('toggling')
         this.connection.emit('user-input', lightName)
     }
     

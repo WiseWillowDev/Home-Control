@@ -1,5 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ColorService } from 'src/app/common/colors/color.service';
+import { Colors } from 'src/app/common/colors/colors.model';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
 import { CarsService } from '../cars.service';
@@ -9,18 +11,52 @@ import { CarsService } from '../cars.service';
   templateUrl: './car-view.component.html',
   styleUrls: ['./car-view.component.scss']
 })
-export class CarViewComponent implements OnInit {
+export class CarViewComponent implements OnInit, AfterViewInit {
 
   @Input() car: Car = {} as any;
 
-  @Input() editable: boolean = false;
+  @Input() editable: boolean = false ;
   
   @Output() update: EventEmitter<void> = new EventEmitter<void>()
 
+  @ViewChild('myCanvas', {static: false}) myCanvas!: ElementRef;
 
-  constructor(private router: Router, private carEditState: CarEditStateService, private carService: CarsService) { }
+  context: any;
+
+  colors: Colors = this.colorService.getDarkMode();
+
+  constructor(private router: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(): void {
+      this.myCanvas?.nativeElement?.getContext('2d')
+      this.context = this.myCanvas?.nativeElement?.getContext('2d');
+      const remaining = this.getTime().substring(0, this.getTime().length -1);   
+
+      if (+remaining >= 0) {
+        const remainingPi = (Math.PI * 2 - ((Math.PI * 2) * +remaining) / 48)
+        this.drawPieSlice(150, 80, 40, Math.PI * 2, remainingPi, this.getColor(), this.colors.platformHighlight);
+      }
+  }
+
+  drawPieSlice(centerX: any, centerY: any, radius: any, startAngle: any, endAngle: any, fillColor: any, strokeColor: any) {
+    this.context.save();
+    this.context.fillStyle = fillColor;
+    this.context.strokeStyle = strokeColor;
+    this.context.beginPath();
+    this.context.moveTo(centerX, centerY);
+    this.context.arc(centerX, centerY, radius, startAngle, endAngle, strokeColor);
+    this.context.closePath();
+    this.context.fill();
+    this.context.restore();
+}
+
+  getColor(): any {
+    const carColor: string = this.car.color;
+    const colors: any = this.colors;
+    return colors[carColor];
   }
 
   edit(): void {

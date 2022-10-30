@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ColorService } from './common/colors/color.service';
+import { Colors } from './common/colors/colors.model';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'home-control';
+
+  colors: Colors = this.colorService.getDarkMode();
+
+  constructor(private colorService: ColorService) {}
 }

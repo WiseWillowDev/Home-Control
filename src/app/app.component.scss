@@ -1,0 +1,9 @@
+.real-body {
+    min-height: 100vh;
+    padding-bottom: 1rem;
+}
+
+.nested-body {
+    max-height: calc(100vh - 4rem);
+    overflow: scroll;
+}

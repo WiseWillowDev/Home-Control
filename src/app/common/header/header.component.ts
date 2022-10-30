@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ColorService } from '../colors/color.service';
+import { Colors } from '../colors/colors.model';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,9 @@ export class HeaderComponent implements OnInit {
 
   @Input() title: string = '';
 
-  constructor() { }
+  colors: Colors = this.colorService.getDarkMode();
+
+  constructor(private colorService: ColorService) { }
 
   ngOnInit(): void {
   }

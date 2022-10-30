@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ColorService } from '../colors/color.service';
+import { Colors } from '../colors/colors.model';
 
 @Component({
   selector: 'app-tile',
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TileComponent implements OnInit {
 
-  constructor() { }
+  colors: Colors = this.colorService.getDarkMode();
+
+  constructor(private colorService: ColorService) { }
 
   ngOnInit(): void {
   }

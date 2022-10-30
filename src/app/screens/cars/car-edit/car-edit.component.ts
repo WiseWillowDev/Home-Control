@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { ColorService } from 'src/app/common/colors/color.service';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
 import { CarsService } from '../cars.service';
@@ -13,16 +14,26 @@ import { CarsService } from '../cars.service';
 })
 export class CarEditComponent implements OnInit, OnDestroy {
 
-  car: Car = {} as any;
+  car: Car | null = null;
   carForm: FormGroup = new FormGroup({});
 
   destroySub: Subject<void> = new Subject();
 
   selectedcolor: string = 'white';
 
-  colors: string[] = ["black", "white", "red", "blue", "green", "grey", "pink"]
+  colors: string[] = [
+    "black", 
+    "white", 
+    "red", 
+    "blue", 
+    "green", 
+    "grey", 
+    "pink"
+  ]
 
-  constructor(private route: Router, private carEditState: CarEditStateService, private carService: CarsService) { }
+
+
+  constructor(private route: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
 
   ngOnInit(): void {
 
@@ -33,20 +44,27 @@ export class CarEditComponent implements OnInit, OnDestroy {
     this.carForm.addControl('name', new FormControl('', [Validators.required]))
 
 
-    this.carEditState.getCar().pipe(takeUntil(this.destroySub)).subscribe((car: Car) => {
-      console.log(car);
-      this.car = car;
-      this.selectedcolor = car.color;
-      this.carForm.controls["name"].setValue(car.nickname)
-      this.carForm.controls["make"].setValue(car.make)
-      this.carForm.controls["model"].setValue(car.model)
-      this.carForm.controls["year"].setValue(car.year)
-      this.carForm.controls["plate"].setValue(car.plate)
+    this.carEditState.getCar().pipe(takeUntil(this.destroySub)).subscribe((car: Car | null) => {
+      if (!!car) {
+        this.car = car;
+        this.selectedcolor = car.color;
+        this.carForm.controls["name"].setValue(car.nickname)
+        this.carForm.controls["make"].setValue(car.make)
+        this.carForm.controls["model"].setValue(car.model)
+        this.carForm.controls["year"].setValue(car.year)
+        this.carForm.controls["plate"].setValue(car.plate)
+      }
+
     })
   }
 
   selectColor(color: string) {
     this.selectedcolor = color
+  }
+
+  showColor(color: string): string {
+    const colors: any = this.colorService.getDarkMode();
+    return colors[color];
   }
 
   ngOnDestroy(): void {
@@ -65,10 +83,16 @@ export class CarEditComponent implements OnInit, OnDestroy {
       lastRegisteredDate: new Date()
     }
 
-    this.carService.updateCar(toBeSavedCar).subscribe(res => {
-      console.log('updated');
-      this.route.navigate(['/cars'])
-    })
+    if (!!this.car) {
+      this.carService.updateCar(toBeSavedCar).subscribe(res => {
+        this.route.navigate(['/cars'])
+      })
+    } else {
+      this.carService.registerNewCar(toBeSavedCar).subscribe(() => {
+        this.route.navigate(['/cars'])
+      })
+    }
+
   }
 
   getFormattedValue(controlName: string): string {

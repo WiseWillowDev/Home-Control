@@ -7,13 +7,13 @@ import { Car } from './cars.model';
 })
 export class CarEditStateService {
 
-    car$: BehaviorSubject<Car> = new BehaviorSubject<Car>({} as any)
+    car$: BehaviorSubject<Car | null> = new BehaviorSubject<Car | null>(null)
 
-    getCar(): Observable<Car> {
+    getCar(): Observable<Car | null> {
         return this.car$;
     }
 
-    updateCar(car: Car): void {
+    updateCar(car: Car | null): void {
         this.car$.next(car);
     }
 }

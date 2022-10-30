@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ColorService } from 'src/app/common/colors/color.service';
+import { Colors } from 'src/app/common/colors/colors.model';
 import { CarEditStateService } from './car-edit-state.service';
 import { Car } from './cars.model';
 import { CarsService } from './cars.service';
@@ -15,8 +17,9 @@ export class CarsComponent implements OnInit {
 
   cars: Car[] = []
 
+  colors: Colors = this.colorService.getDarkMode();
 
-  constructor(private carService: CarsService, private router: Router, private carEditState: CarEditStateService) { }
+  constructor(private carService: CarsService, private router: Router, private carEditState: CarEditStateService, private colorService: ColorService) { }
 
   ngOnInit(): void {
     this.refreshCars();
@@ -31,7 +34,7 @@ export class CarsComponent implements OnInit {
 
 
   navigate(): void {
-    this.carEditState.updateCar({ } as any)
+    this.carEditState.updateCar(null)
     this.router.navigate(['cars/edit'])
   }
 
