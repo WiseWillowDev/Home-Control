@@ -26,6 +26,8 @@ export class HexViewComponent implements OnInit {
     this.router.navigate(['hex/details']);
   }
 
-
+  formatId(): string {
+    return this.hexScore.model_id.substring(0, 6).toUpperCase();
+  } 
 
 }

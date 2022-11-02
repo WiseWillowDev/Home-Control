@@ -19,10 +19,15 @@ export class HexViewDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.hexStateService.getModel().subscribe((score) => {
-      this.modelId = score.model_id;
-      this.hexService.getScoresByModel(this.modelId).subscribe(scores => {
-        this.scores = scores;
-      })
+      if (!!score) {
+        this.modelId = score.model_id;
+        this.hexService.getScoresByModel(this.modelId).subscribe(scores => {
+          this.scores = scores;
+        })
+      } else {
+        this.router.navigate(['hex'])
+      }
+
     })
   }
 

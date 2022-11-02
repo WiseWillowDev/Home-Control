@@ -1,4 +1,17 @@
 <app-tile (click)="viewDetails()">
-    {{getScore()}}
+
+    <div class="wrapper" style="display: flex; flex-direction: row; justify-content: space-between;">
+        <div>
+            {{formatId()}}
+
+        </div>
+
+        <div>
+            {{getScore()}}
+        </div>
+    
+
+    </div>
+
 
 </app-tile>

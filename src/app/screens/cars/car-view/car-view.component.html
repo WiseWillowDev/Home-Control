@@ -17,7 +17,7 @@
                     </svg>
                     
             </div>
-            <div *ngIf="!isExpired() && !editable" >
+            <div [ngStyle]="{'display': !isExpired() && !editable ? 'block' : 'none'}">
                 <canvas id="myCanvas" #myCanvas></canvas>
             </div>
             <div class="hour-display">

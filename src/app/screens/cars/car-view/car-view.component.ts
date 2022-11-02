@@ -15,7 +15,7 @@ export class CarViewComponent implements OnInit, AfterViewInit {
 
   @Input() car: Car = {} as any;
 
-  @Input() editable: boolean = false ;
+  @Input() editable: boolean = false;
   
   @Output() update: EventEmitter<void> = new EventEmitter<void>()
 
@@ -29,18 +29,21 @@ export class CarViewComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {  }
 
   ngAfterViewInit(): void {
-      this.myCanvas?.nativeElement?.getContext('2d')
-      this.context = this.myCanvas?.nativeElement?.getContext('2d');
-      const remaining = this.getTime().substring(0, this.getTime().length -1);   
+    this.drawCircles()
+  }
 
-      if (+remaining >= 0) {
-        const remainingPi = (Math.PI * 2 - ((Math.PI * 2) * +remaining) / 48)
-        this.drawPieSlice(150, 80, 40, Math.PI * 2, remainingPi, this.getColor(), this.colors.platformHighlight);
-      }
+  drawCircles(): void {
+    this.myCanvas?.nativeElement?.getContext('2d');
+    this.context = this.myCanvas?.nativeElement?.getContext('2d');
+    const remaining = this.getTime().substring(0, this.getTime().length -1);   
+
+    if (+remaining >= 0) {
+      const remainingPi = (Math.PI * 2 - ((Math.PI * 2) * +remaining) / 48)
+      this.drawPieSlice(150, 80, 40, Math.PI * 2, remainingPi, this.getColor(), this.colors.platformHighlight);
+    }
   }
 
   drawPieSlice(centerX: any, centerY: any, radius: any, startAngle: any, endAngle: any, fillColor: any, strokeColor: any) {

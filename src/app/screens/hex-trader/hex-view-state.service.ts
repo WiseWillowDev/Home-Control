@@ -7,13 +7,13 @@ import { Score } from './hex.model';
 })
 export class HexViewStateService {
 
-    hex$: BehaviorSubject<Score> = new BehaviorSubject<Score>({ } as any)
+    hex$: BehaviorSubject<Score | null> = new BehaviorSubject<Score | null>(null)
 
-    getModel(): Observable<Score> {
+    getModel(): Observable<Score | null> {
         return this.hex$;
     }
 
-    updateModel(score: Score): void {
+    updateModel(score: Score | null): void {
         this.hex$.next(score);
     }
 }

@@ -25,13 +25,11 @@ export class CarsComponent implements OnInit {
     this.refreshCars();
   }
 
-
   refreshCars(): void {
     this.carService.getCars().subscribe((cars: Car[]) => {
       this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
     })
   }
-
 
   navigate(): void {
     this.carEditState.updateCar(null)
@@ -39,7 +37,7 @@ export class CarsComponent implements OnInit {
   }
 
   editToggle(): void {
-    this.editable = !this.editable
+    this.editable = !this.editable;
   }
 
 }
