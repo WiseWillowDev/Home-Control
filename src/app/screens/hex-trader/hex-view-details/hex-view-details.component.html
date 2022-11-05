@@ -1,6 +1,6 @@
 <app-header [title]="'Hex Details'"></app-header>
 
-<app-graph [items]="items"></app-graph>
+<app-graph *ngIf="items.length"></app-graph>
 
 <app-button *ngIf="!add" (click)="addModel()" [color]="colors.platformHighlight" [backgroundcolor]="colors.platform">+</app-button>
 <div *ngIf="add">
@@ -42,7 +42,7 @@
 
 
 <div *ngFor="let score of scores">
-    <app-tile >
+    <app-tile  (click)="graphMe(score)">
         <div class="wrapper">
             <div class="text">
                 {{formatScore(score.score)}}

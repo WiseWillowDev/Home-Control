@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
+import { GraphService } from 'src/app/common/graph/graph.service';
 import { HexViewStateService } from '../hex-view-state.service';
 import { Score } from '../hex.model';
 import { HexService } from '../hex.service';
@@ -10,7 +11,8 @@ import { HexService } from '../hex.service';
 @Component({
   selector: 'app-hex-view-details',
   templateUrl: './hex-view-details.component.html',
-  styleUrls: ['./hex-view-details.component.scss']
+  styleUrls: ['./hex-view-details.component.scss'],
+  providers: [GraphService]
 })
 export class HexViewDetailsComponent implements OnInit {
 
@@ -30,10 +32,16 @@ export class HexViewDetailsComponent implements OnInit {
   startPrice = 0
   endPrice = 0
 
-  items = [10, 20, 30, 20, 40, 70]
+  items: number[] = []
+  source: {mili: number, time: string, price: number}[] = []
 
-
-  constructor(private hexStateService: HexViewStateService, private router: Router, private hexService: HexService, private colorService: ColorService) { }
+  constructor(
+    private hexStateService: HexViewStateService, 
+    private router: Router, 
+    private hexService: HexService, 
+    private colorService: ColorService,
+    private graphService: GraphService
+    ) { }
 
   ngOnInit(): void {
     this.hexStateService.getModel().subscribe((score) => {
@@ -62,6 +70,31 @@ export class HexViewDetailsComponent implements OnInit {
     })
   }
 
+  grabData(mili: number): void {
+    // console.log(mili)
+    this.hexService.getMili(mili).subscribe((value: {mili: number, time: string, price: number}) => {
+      // console.log(value)
+      this.source.push(value);
+      this.source.sort((a ,b) => a.mili > b.mili ? 1 : -1)
+      this.items = [...this.source.map((item) => item.price)];
+      this.graphService.setGraph(this.items);
+    })
+  }
+
+  graphMe(score: Score) {
+    this.source = []
+    this.items = []
+    const divider = 10
+    const partial: number = ((score.end_mili - score.start_mili) / divider)
+
+    for(let i = 1; i < divider; i++) {
+      this.grabData((+partial * i) + (+score.start_mili));
+
+    }
+    this.grabData(score.start_mili);
+    this.grabData(score.end_mili);
+  }
+
   getPrice(): number {
     const startMoney = 1000
     const token = startMoney / this.startPrice 
@@ -69,11 +102,7 @@ export class HexViewDetailsComponent implements OnInit {
   }
 
   getDate(mili: number): string {
-    // console.log(this.scores[0].start_mili)
-    // console.log(mili)
-
     const date = new Date(Math.floor(mili) * 1000);
-    // console.log(date);
     return date.toISOString().substring(0, 10);
   }
 
