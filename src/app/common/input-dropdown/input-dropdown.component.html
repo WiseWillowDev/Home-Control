@@ -1,0 +1,10 @@
+<div class="wrapper">
+    <!-- <input [ngStyle]="{'background-color': getColor('platform')}" class="input" [formControl]="control" [placeholder]="placeholder"/> -->
+    
+    <select [ngStyle]="{'background-color': getColor('platform'), 'color': control.value ? getColor('text') : getColor('grey')}" class="input styled-select" name="cars" id="cars" [formControl]="control" >
+        <option value="">{{placeholder}}</option>
+        <option class="item" *ngFor="let item of dropdownItems" value="{{item}}">{{item}}</option>
+    </select>
+    
+
+</div>

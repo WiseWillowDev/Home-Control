@@ -40,6 +40,24 @@ export class CarEditComponent implements OnInit, OnDestroy {
     "yellow"
   ]
 
+  carMakes: string[] = [
+    'Audi',
+    'BMW',
+    'Chevy',
+    'Dodge',
+    'Ford',
+    'Honda',
+    'Hyundai',
+    'KIA',
+    'Mazda',
+    'Mercedez',
+    'Nissan',
+    'Subaru',
+    'Toyota',
+    'Tesla',
+    'Volkswagen'
+  ]
+
 
 
   constructor(private route: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
@@ -91,6 +109,8 @@ export class CarEditComponent implements OnInit, OnDestroy {
       plate: this.getFormattedValue('plate').toUpperCase(),
       lastRegisteredDate: new Date()
     }
+
+    console.log(toBeSavedCar)
 
     if (!this.loading) {  
       this.loading = true;

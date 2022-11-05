@@ -22,6 +22,8 @@ import { LightEditComponent } from './screens/lights/light-edit/light-edit.compo
 import { HexViewComponent } from './screens/hex-trader/hex-view/hex-view.component';
 import { HexViewDetailsComponent } from './screens/hex-trader/hex-view-details/hex-view-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { InputDropdownComponent } from './common/input-dropdown/input-dropdown.component';
+import { GraphComponent } from './common/graph/graph.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     LightViewComponent,
     LightEditComponent,
     HexViewComponent,
-    HexViewDetailsComponent
+    HexViewDetailsComponent,
+    InputDropdownComponent,
+    GraphComponent
   ],
   imports: [
     BrowserModule,

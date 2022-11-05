@@ -12,7 +12,7 @@
     </div>
     <form [formGroup]="carForm" style="display: flex; flex-direction: column">
         <app-input [control]="nameControl" [placeholder]="'Car name'"></app-input>
-        <app-input [control]="makeControl" [placeholder]="'Make'"></app-input>
+        <app-input-dropdown [dropdownItems]="carMakes" [control]="makeControl" [placeholder]="'Make'"></app-input-dropdown>
         <app-input [control]="modelControl" [placeholder]="'Model'"></app-input>
         <app-input [control]="yearControl" [placeholder]="'Year'"></app-input>
         <app-input [control]="plateControl" [placeholder]="'Plate Number'"></app-input>

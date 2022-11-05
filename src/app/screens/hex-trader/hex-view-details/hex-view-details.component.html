@@ -1,14 +1,53 @@
 <app-header [title]="'Hex Details'"></app-header>
-<app-tile >{{modelId}}</app-tile>
+
+<app-graph [items]="items"></app-graph>
+
+<app-button *ngIf="!add" (click)="addModel()" [color]="colors.platformHighlight" [backgroundcolor]="colors.platform">+</app-button>
+<div *ngIf="add">
+    <app-button (click)="addModel()" [color]="colors.platformHighlight" [backgroundcolor]="colors.platform">x</app-button>
+    <form>
+        <app-input [control]="startControl" [placeholder]="'Start Date'"></app-input>
+        <app-input [control]="endControl" [placeholder]="'End Date'"></app-input>    
+    </form>
+    <app-tile>
+        <div class="wrapper">
+            <div class="text">
+                {{formatScore(getPrice())}}
+            </div> 
+            <div class="text">
+                {{getDate(startControl.value)}} | {{getDate(endControl.value)}}
+            </div>
+        </div>
+
+    </app-tile>
+    <app-button  (click)="testModel()" style="margin-top: 1rem;" [color]="colors.platformHighlight" [backgroundcolor]="colors.platform">
+        <div class="button">
+            <div>
+                TEST MODEL
+            </div>
+        </div>
+    </app-button>
+</div>
+
+
+<app-tile >
+    <div style="display: flex; justify-content: center;">
+        <div class="text">
+            {{modelId}}
+        </div>
+    </div>
+
+</app-tile>
+
 
 
 <div *ngFor="let score of scores">
     <app-tile >
-        <div style="display: flex; flex-direction: row; justify-content: space-between;">
-            <div >
+        <div class="wrapper">
+            <div class="text">
                 {{formatScore(score.score)}}
             </div> 
-            <div>
+            <div class="text">
                 {{getDate(score.start_mili)}} | {{getDate(score.end_mili)}}
             </div>
         </div>

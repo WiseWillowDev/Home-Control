@@ -5,7 +5,7 @@
                 <div class="logo-wrapper" [ngStyle]="{'background-color': getColor()}">
                     <img class="svg-size"  [src]="getSrc()">
                 </div>
-                <div class="sub-info">{{car.nickname}}'s car</div> 
+                <div class="sub-info text">{{car.nickname}}'s car</div> 
             </div>
         </div>
 
@@ -21,7 +21,7 @@
                 <canvas id="myCanvas" #myCanvas></canvas>
             </div>
             <div class="hour-display">
-                <div *ngIf="!isExpired() && !editable">{{getTime()}}</div>
+                <div *ngIf="!isExpired() && !editable" class="text">{{getTime()}}</div>
             </div>
         
 

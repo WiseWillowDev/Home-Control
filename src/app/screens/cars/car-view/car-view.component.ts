@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
 import { CarEditStateService } from '../car-edit-state.service';
@@ -78,9 +79,10 @@ export class CarViewComponent implements OnInit, AfterViewInit {
   refresh(): void { 
     if(!this.loading) {
       this.loading = true;
-      this.carService.reregisterCar(this.car.plate).subscribe(() => {
+      this.carService.reregisterCar(this.car.plate)
+      .pipe(finalize(() =>  this.loading = false))
+      .subscribe(() => {
         this.update.emit()
-        this.loading = false;
       })
     }
   }
