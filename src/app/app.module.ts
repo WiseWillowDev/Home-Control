@@ -25,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputDropdownComponent } from './common/input-dropdown/input-dropdown.component';
 import { GraphComponent } from './common/graph/graph.component';
 import { ToastComponent } from './common/toast/toast.component';
+import { LoadingDirective } from './common/loading/loading.directive';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ToastComponent } from './common/toast/toast.component';
     HexViewDetailsComponent,
     InputDropdownComponent,
     GraphComponent,
-    ToastComponent
+    ToastComponent,
+    LoadingDirective
   ],
   imports: [
     BrowserModule,

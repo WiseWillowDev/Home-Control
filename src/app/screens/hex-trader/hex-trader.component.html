@@ -1,6 +1,6 @@
 <app-header [title]="'Hex Trader'"></app-header>
 
-<div>
+<div [appLoading]="loading">
     <div *ngFor="let score of hexScores">
         <app-hex-view [hexScore]="score"></app-hex-view>
     </div>

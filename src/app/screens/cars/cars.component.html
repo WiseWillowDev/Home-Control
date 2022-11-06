@@ -1,6 +1,6 @@
 <app-header [title]="'Cars'"></app-header>
 
-<div class="content-wrapper">
+<div class="content-wrapper"  [appLoading]="loading">
     
     <div class="button-wrapper">
         <app-button [color]="colors.platformHighlight"  [backgroundcolor]="colors.platform" style="margin-right: .1rem;" (click)="editToggle()">Edit</app-button>

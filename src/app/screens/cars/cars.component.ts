@@ -15,6 +15,8 @@ export class CarsComponent implements OnInit {
 
   editable: boolean = false;
 
+  loading: boolean = false;
+
   cars: Car[] = []
 
   colors: Colors = this.colorService.getDarkMode();
@@ -25,10 +27,15 @@ export class CarsComponent implements OnInit {
     this.refreshCars();
   }
 
-  refreshCars(): void {
-    this.carService.getCars().subscribe((cars: Car[]) => {
-      this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
-    })
+  refreshCars(): void { 
+    this.loading = true;
+    setTimeout(() => {
+      this.carService.getCars().subscribe((cars: Car[]) => {
+        this.loading = false;
+        this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
+      })  
+    }, 3000)
+
   }
 
   navigate(): void {

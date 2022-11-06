@@ -11,6 +11,8 @@ export class HexTraderComponent implements OnInit {
 
   hexScores: Score[] = [];
 
+  loading: boolean = false;
+
   constructor(private hexService: HexService) { }
 
   ngOnInit(): void {
@@ -18,7 +20,9 @@ export class HexTraderComponent implements OnInit {
   }
 
   getScores(): void {
+    this.loading = true;
     this.hexService.getScores(20).subscribe(scores => {
+      this.loading = false;
       this.hexScores = scores;
     })
 

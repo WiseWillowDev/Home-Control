@@ -26,6 +26,8 @@ export class HexViewDetailsComponent implements OnInit {
 
   hexForm: FormGroup = new FormGroup({});
 
+  loading: boolean = false;
+
   startControl: FormControl = new FormControl('', [Validators.required]);
   endControl: FormControl = new FormControl('', [Validators.required]);
 
@@ -47,7 +49,9 @@ export class HexViewDetailsComponent implements OnInit {
     this.hexStateService.getModel().subscribe((score) => {
       if (!!score) {
         this.modelId = score.model_id;
+        this.loading = true;
         this.hexService.getScoresByModel(this.modelId).subscribe(scores => {
+          this.loading = false;
           this.scores = scores;
         })
       } else {

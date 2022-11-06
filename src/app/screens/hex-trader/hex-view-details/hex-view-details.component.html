@@ -40,16 +40,17 @@
 </app-tile>
 
 
-
-<div *ngFor="let score of scores">
-    <app-tile  (click)="graphMe(score)">
-        <div class="wrapper">
-            <div class="text">
-                {{formatScore(score.score)}}
-            </div> 
-            <div class="text">
-                {{getDate(score.start_mili)}} | {{getDate(score.end_mili)}}
+<div  [appLoading]="loading">
+    <div *ngFor="let score of scores">
+        <app-tile  (click)="graphMe(score)">
+            <div class="wrapper">
+                <div class="text">
+                    {{formatScore(score.score)}}
+                </div> 
+                <div class="text">
+                    {{getDate(score.start_mili)}} | {{getDate(score.end_mili)}}
+                </div>
             </div>
-        </div>
-    </app-tile>
+        </app-tile>
+    </div>
 </div>
