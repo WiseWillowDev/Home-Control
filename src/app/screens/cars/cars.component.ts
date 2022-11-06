@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
+import { loadingFlipper, LoadingWrapper } from 'src/app/common/operators/loading';
 import { CarEditStateService } from './car-edit-state.service';
 import { Car } from './cars.model';
 import { CarsService } from './cars.service';
@@ -15,7 +16,7 @@ export class CarsComponent implements OnInit {
 
   editable: boolean = false;
 
-  loading: boolean = false;
+  loading: LoadingWrapper = { loading: false};
 
   cars: Car[] = []
 
@@ -28,13 +29,9 @@ export class CarsComponent implements OnInit {
   }
 
   refreshCars(): void { 
-    this.loading = true;
-    setTimeout(() => {
-      this.carService.getCars().subscribe((cars: Car[]) => {
-        // this.loading = false;
-        // this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
+      this.carService.getCars().pipe(loadingFlipper(this.loading)).subscribe((cars: Car[]) => {
+        this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
       })  
-    }, 3000)
 
   }
 

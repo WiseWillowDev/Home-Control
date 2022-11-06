@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { loadingFlipper, LoadingWrapper } from 'src/app/common/operators/loading';
+import { ToastMsg } from 'src/app/common/operators/toast';
 import { Score } from './hex.model';
 import { HexService } from './hex.service';
 
@@ -11,7 +13,7 @@ export class HexTraderComponent implements OnInit {
 
   hexScores: Score[] = [];
 
-  loading: boolean = false;
+  loading: LoadingWrapper = { loading: false };
 
   constructor(private hexService: HexService) { }
 
@@ -20,9 +22,7 @@ export class HexTraderComponent implements OnInit {
   }
 
   getScores(): void {
-    this.loading = true;
-    this.hexService.getScores(20).subscribe(scores => {
-      this.loading = false;
+    this.hexService.getScores(20).pipe(loadingFlipper(this.loading)).subscribe(scores => {
       this.hexScores = scores;
     })
 
