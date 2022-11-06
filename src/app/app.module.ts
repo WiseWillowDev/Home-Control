@@ -24,6 +24,7 @@ import { HexViewDetailsComponent } from './screens/hex-trader/hex-view-details/h
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputDropdownComponent } from './common/input-dropdown/input-dropdown.component';
 import { GraphComponent } from './common/graph/graph.component';
+import { ToastComponent } from './common/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { GraphComponent } from './common/graph/graph.component';
     HexViewComponent,
     HexViewDetailsComponent,
     InputDropdownComponent,
-    GraphComponent
+    GraphComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,

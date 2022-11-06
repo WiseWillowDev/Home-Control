@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
+import { ToastService } from 'src/app/common/toast/toast.service';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
 import { CarsService } from '../cars.service';
@@ -28,7 +29,13 @@ export class CarViewComponent implements OnInit, AfterViewInit {
 
   colors: Colors = this.colorService.getDarkMode();
 
-  constructor(private router: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
+  constructor(
+    private router: Router, 
+    private carEditState: CarEditStateService, 
+    private carService: CarsService, 
+    private colorService: ColorService,
+    private toastSerivce: ToastService
+    ) { }
 
   ngOnInit(): void {  }
 
@@ -73,6 +80,7 @@ export class CarViewComponent implements OnInit, AfterViewInit {
   delete(): void {
     this.carService.deleteCar(this.car.plate).subscribe(() => {
       this.update.emit()
+      this.toastSerivce.showMessage(`${this.car.plate} has been deleted`)
     })
   }
 

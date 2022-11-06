@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { ColorService } from 'src/app/common/colors/color.service';
+import { ToastService } from 'src/app/common/toast/toast.service';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
 import { CarsService } from '../cars.service';
@@ -60,7 +61,13 @@ export class CarEditComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private route: Router, private carEditState: CarEditStateService, private carService: CarsService, private colorService: ColorService) { }
+  constructor(
+    private route: Router, 
+    private carEditState: CarEditStateService, 
+    private carService: CarsService, 
+    private colorService: ColorService,
+    private toastSerivce: ToastService
+    ) { }
 
   ngOnInit(): void {
 
@@ -118,11 +125,14 @@ export class CarEditComponent implements OnInit, OnDestroy {
         this.carService.updateCar(toBeSavedCar).subscribe(res => {
           this.loading = false;
           this.route.navigate(['/cars'])
+          this.toastSerivce.showMessage(`${toBeSavedCar.plate} has been updated`)
+
         })
       } else {
         this.carService.registerNewCar(toBeSavedCar).subscribe(() => {
           this.loading = false;
           this.route.navigate(['/cars'])
+          this.toastSerivce.showMessage(`${toBeSavedCar.plate} has been created`)
         })
       }
     }
