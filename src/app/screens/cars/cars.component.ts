@@ -31,8 +31,8 @@ export class CarsComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.carService.getCars().subscribe((cars: Car[]) => {
-        this.loading = false;
-        this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
+        // this.loading = false;
+        // this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
       })  
     }, 3000)
 

@@ -14,8 +14,8 @@ export class ToastComponent implements OnInit {
   constructor(private toastService: ToastService) { }
 
   ngOnInit(): void {
-    // this.show = true;
-    // this.message = 'test message'
+    this.show = true;
+    this.message = 'test message'
     this.toastService.getMessages().subscribe((message: string) => {
       this.message = message;
       this.show = true;
