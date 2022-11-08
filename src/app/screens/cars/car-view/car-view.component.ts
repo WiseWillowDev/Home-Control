@@ -4,7 +4,7 @@ import { finalize } from 'rxjs';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
 import { loadingFlipper, LoadingWrapper } from 'src/app/common/operators/loading';
-import { ToastMsg } from 'src/app/common/operators/toast';
+import { toastMsg } from 'src/app/common/operators/toast';
 import { ToastService, ToastType } from 'src/app/common/toast/toast.service';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
@@ -80,16 +80,23 @@ export class CarViewComponent implements OnInit, AfterViewInit {
   }
 
   delete(): void {
-    this.carService.deleteCar(this.car.plate).subscribe(() => {
+    this.carService.deleteCar(this.car.plate)
+    .pipe(
+      loadingFlipper(this.loading),
+      toastMsg(`${this.car.nickname}'s car has been deleted`, `${this.car.nickname}'s car failed deletion`, this.toastSerivce)
+    )
+    .subscribe(() => {
       this.update.emit()
-      this.toastSerivce.showMessage(`${this.car.plate} has been deleted`)
     })
   }
 
   refresh(): void { 
     if(!this.loading.loading) {
       this.carService.reregisterCar(this.car.plate)
-      .pipe(loadingFlipper(this.loading), ToastMsg(`${this.car.nickname}'s Car has been reregistered`, `${this.car.nickname}'s Car failed being reregistered`, this.toastSerivce))
+      .pipe(
+        loadingFlipper(this.loading), 
+        toastMsg(`${this.car.nickname}'s Car has been reregistered`, `${this.car.nickname}'s Car failed being reregistered`, this.toastSerivce)
+      )
       .subscribe(() => {
         this.update.emit()
       })

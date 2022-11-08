@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {  Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, of, Subject, takeUntil } from 'rxjs';
 import { ColorService } from 'src/app/common/colors/color.service';
+import { loadingFlipper, LoadingWrapper } from 'src/app/common/operators/loading';
+import { toastMsg } from 'src/app/common/operators/toast';
 import { ToastService } from 'src/app/common/toast/toast.service';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
@@ -15,7 +17,7 @@ import { CarsService } from '../cars.service';
 })
 export class CarEditComponent implements OnInit, OnDestroy {
 
-  loading = false;
+  loading: LoadingWrapper = { loading: false};
 
   car: Car | null = null;
   carForm: FormGroup = new FormGroup({});
@@ -119,25 +121,14 @@ export class CarEditComponent implements OnInit, OnDestroy {
 
     console.log(toBeSavedCar)
 
-    if (!this.loading) {  
-      this.loading = true;
-      if (!!this.car) {
-        this.carService.updateCar(toBeSavedCar).subscribe(res => {
-          this.loading = false;
-          this.route.navigate(['/cars'])
-          this.toastSerivce.showMessage(`${toBeSavedCar.plate} has been updated`)
+    if (!this.loading.loading) {
+      const save$: Observable<any> = (!!this.car ? this.carService.updateCar(toBeSavedCar) : this.carService.registerNewCar(toBeSavedCar))
+      .pipe(loadingFlipper(this.loading), toastMsg(`${toBeSavedCar.nickname}'s car has been saved`, `${toBeSavedCar.nickname}'s car failed saving`, this.toastSerivce));
 
-        })
-      } else {
-        this.carService.registerNewCar(toBeSavedCar).subscribe(() => {
-          this.loading = false;
-          this.route.navigate(['/cars'])
-          this.toastSerivce.showMessage(`${toBeSavedCar.plate} has been created`)
-        })
-      }
+      save$.subscribe(() => {
+        this.route.navigate(['/cars'])
+      })
     }
-
-
   }
 
   getFormattedValue(controlName: string): string {

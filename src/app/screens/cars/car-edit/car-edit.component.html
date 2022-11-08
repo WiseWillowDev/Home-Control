@@ -24,8 +24,8 @@
 
 
     <div (click)="save()"  class="submit-button">
-        <div *ngIf="!loading">Save</div>
-        <div *ngIf="loading" class="loading">
+        <div *ngIf="!loading.loading">Save</div>
+        <div *ngIf="loading.loading" class="loading">
             <div  >Saving</div>
             <div class="loading-1">.</div>
             <div class="loading-2">.</div>

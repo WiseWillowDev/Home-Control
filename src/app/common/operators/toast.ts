@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 import { ToastService, ToastType } from "../toast/toast.service";
 
-export function ToastMsg(messageSuccess: string, messageFail: string, toastSerivce: ToastService) {
+export function toastMsg(messageSuccess: string, messageFail: string, toastSerivce: ToastService) {
     return function<T>(source: Observable<T>): Observable<T> {
         return new Observable(subscriber => {
             return source.subscribe({
