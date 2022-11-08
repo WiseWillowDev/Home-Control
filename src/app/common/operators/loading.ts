@@ -12,6 +12,10 @@ export function loadingFlipper(loading: LoadingWrapper) {
                 next(value) {
                     subscriber.next(value);
                     loading.loading = false;
+                },
+                error(error) {
+                    loading.loading = false;
+                    subscriber.error(error);
                 }
             })
         })

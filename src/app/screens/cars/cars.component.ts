@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
 import { loadingFlipper, LoadingWrapper } from 'src/app/common/operators/loading';
+import { ToastMsg } from 'src/app/common/operators/toast';
+import { ToastService } from 'src/app/common/toast/toast.service';
 import { CarEditStateService } from './car-edit-state.service';
 import { Car } from './cars.model';
 import { CarsService } from './cars.service';
@@ -22,14 +24,20 @@ export class CarsComponent implements OnInit {
 
   colors: Colors = this.colorService.getDarkMode();
 
-  constructor(private carService: CarsService, private router: Router, private carEditState: CarEditStateService, private colorService: ColorService) { }
+  constructor(
+    private carService: CarsService, 
+    private router: Router, 
+    private carEditState: CarEditStateService, 
+    private colorService: ColorService,
+    private toastSerivce: ToastService
+    ) { }
 
   ngOnInit(): void {
     this.refreshCars();
   }
 
   refreshCars(): void { 
-      this.carService.getCars().pipe(loadingFlipper(this.loading)).subscribe((cars: Car[]) => {
+      this.carService.getCars().pipe(loadingFlipper(this.loading), ToastMsg('', 'Failed grabbing cars', this.toastSerivce)).subscribe((cars: Car[]) => {
         this.cars = cars.sort((a, b) => new Date(b.lastRegisteredDate).valueOf() - new Date(a.lastRegisteredDate).valueOf());
       })  
 

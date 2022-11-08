@@ -1,1 +1,3 @@
-<div id="snackbar" [ngClass]="{'show': show}" class="text">{{message}}</div>
+<div id="snackbar" [ngClass]="{'show': show}" class="text" [ngStyle]="{'color': getType() ? '#6DDD9A' : '#EC7D80'}">
+    {{message}}
+</div>

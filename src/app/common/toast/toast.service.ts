@@ -6,15 +6,25 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ToastService {
 
-  message$: Subject<string> = new Subject<string>();
+  message$: Subject<ToastWrapper> = new Subject<ToastWrapper>();
 
   constructor() { }
 
-  getMessages(): Observable<string> {
+  getMessages(): Observable<ToastWrapper> {
     return this.message$;
-  }
+  } 
 
-  showMessage(message: string): void {
-    this.message$.next(message);
+  showMessage(message: string, type: ToastType = ToastType.Success): void {
+    this.message$.next({message, type});
   }
+}
+
+export enum ToastType {
+  Success,
+  Fail
+}
+
+export interface ToastWrapper {
+  message: string;
+  type: ToastType;
 }

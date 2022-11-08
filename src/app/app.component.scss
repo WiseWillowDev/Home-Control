@@ -6,4 +6,5 @@
 .nested-body {
     max-height: calc(100vh - 4rem);
     overflow: scroll;
+    overflow-x: hidden;
 }

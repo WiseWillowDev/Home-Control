@@ -3,7 +3,9 @@ import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { ColorService } from 'src/app/common/colors/color.service';
 import { Colors } from 'src/app/common/colors/colors.model';
-import { ToastService } from 'src/app/common/toast/toast.service';
+import { loadingFlipper, LoadingWrapper } from 'src/app/common/operators/loading';
+import { ToastMsg } from 'src/app/common/operators/toast';
+import { ToastService, ToastType } from 'src/app/common/toast/toast.service';
 import { CarEditStateService } from '../car-edit-state.service';
 import { Car } from '../cars.model';
 import { CarsService } from '../cars.service';
@@ -25,7 +27,7 @@ export class CarViewComponent implements OnInit, AfterViewInit {
 
   context: any;
 
-  loading: boolean = false;
+  loading: LoadingWrapper = { loading: false };
 
   colors: Colors = this.colorService.getDarkMode();
 
@@ -85,10 +87,9 @@ export class CarViewComponent implements OnInit, AfterViewInit {
   }
 
   refresh(): void { 
-    if(!this.loading) {
-      this.loading = true;
+    if(!this.loading.loading) {
       this.carService.reregisterCar(this.car.plate)
-      .pipe(finalize(() =>  this.loading = false))
+      .pipe(loadingFlipper(this.loading), ToastMsg(`${this.car.nickname}'s Car has been reregistered`, `${this.car.nickname}'s Car failed being reregistered`, this.toastSerivce))
       .subscribe(() => {
         this.update.emit()
       })
